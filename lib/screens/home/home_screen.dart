@@ -23,9 +23,21 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () async {
-                  await Navigator.pushNamed(context, '/');
+                  await Navigator.pushNamed(context, '/levels');
                 },
                 child: const Text('Start')),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () async {
+                  await Navigator.pushNamed(context, '/score');
+                },
+                child: const Text('Score')),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () async {
+                  await Navigator.pushNamed(context, '/settings');
+                },
+                child: const Text('Settings')),
           ],
         ),
       ),

@@ -8,6 +8,16 @@ class AppRouter {
         return SplashScreen.route();
       case HomeScreen.routeName:
         return HomeScreen.route();
+      case LevelsScreen.routeName:
+        return LevelsScreen.route();
+      case CountScreen.routeName:
+        return CountScreen.route();
+      case FinishScreen.routeName:
+        return FinishScreen.route();
+      case SettingsScreen.routeName:
+        return SettingsScreen.route();
+      case ScoreScreen.routeName:
+        return ScoreScreen.route();
       default:
         return _errorRoute();
     }
