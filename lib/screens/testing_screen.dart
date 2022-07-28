@@ -4,13 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TestingScreen extends StatefulWidget {
   const TestingScreen({Key? key}) : super(key: key);
+  static const String routeName = '/test';
+
+  static Route route() {
+    return MaterialPageRoute(
+        settings: const RouteSettings(name: routeName),
+        builder: (context) => const TestingScreen());
+  }
 
   @override
   State<TestingScreen> createState() => _TestingScreenState();
 }
 
 class _TestingScreenState extends State<TestingScreen> {
-  @override
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CalculationsBloc, CalculationsState>(
@@ -20,6 +26,8 @@ class _TestingScreenState extends State<TestingScreen> {
         int drugi = state.secondOperand;
         int result = state.result;
         int score = state.score;
+        String? operator2 = state.secondOperator;
+        int? trzeci = state.thirdOperand;
         return Scaffold(
           body: Column(
             children: [
@@ -33,11 +41,34 @@ class _TestingScreenState extends State<TestingScreen> {
                 height: 50,
               ),
               Center(
-                  child: jeden == 00
-                      ? const Text('')
-                      : result == 00
-                          ? Text('$jeden ' '$operator ' '$drugi = ' '?')
-                          : Text('$jeden ' '$operator ' '$drugi = ' '$result')),
+                  child: trzeci == null
+                      ? jeden == 00
+                          ? const Text('')
+                          : result == 0
+                              ? Text('$jeden ' '$operator ' '$drugi = ' '?')
+                              : Text(
+                                  '$jeden ' '$operator ' '$drugi = ' '$result')
+                      : jeden == 00
+                          ? const Text('')
+                          : result == 0
+                              ? Text('$jeden '
+                                  '$operator '
+                                  '$drugi '
+                                  '$operator2 '
+                                  '$trzeci = '
+                                  '?')
+                              : Text('$jeden '
+                                  '$operator '
+                                  '$drugi '
+                                  '$operator2 '
+                                  '$trzeci = '
+                                  '$result')),
+              //Center(
+              //    child: jeden == 00
+              //        ? const Text('')
+              //        : result == 00
+              //            ? Text('$jeden ' '$operator ' '$drugi = ' '?')
+              //            : Text('$jeden ' '$operator ' '$drugi = ' '$result')),
               const SizedBox(
                 height: 100,
               ),
@@ -92,9 +123,13 @@ class _TestingScreenState extends State<TestingScreen> {
                     _numberbutton(
                         text: '=',
                         onTap: () {
-                          context
-                              .read<CalculationsBloc>()
-                              .add(CalculationsResult());
+                          trzeci == null
+                              ? context
+                                  .read<CalculationsBloc>()
+                                  .add(GetNumbersEasyEvent())
+                              : context
+                                  .read<CalculationsBloc>()
+                                  .add(GetNumbersMediumEvent());
                         }),
                   ],
                 ),

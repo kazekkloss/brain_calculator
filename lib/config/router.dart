@@ -1,4 +1,5 @@
 import 'package:calculator/screens/screens.dart';
+import 'package:calculator/screens/testing_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {
@@ -12,6 +13,8 @@ class AppRouter {
         return LevelsScreen.route();
       case CountScreen.routeName:
         return CountScreen.route();
+      case TestingScreen.routeName:
+        return TestingScreen.route();
       case FinishScreen.routeName:
         return FinishScreen.route();
       case SettingsScreen.routeName:

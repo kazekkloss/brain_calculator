@@ -7,7 +7,6 @@ import '../../widgets/widgets.dart';
 
 class CountScreen extends StatelessWidget {
   const CountScreen({Key? key}) : super(key: key);
-
   static const String routeName = '/count';
 
   static Route route() {
