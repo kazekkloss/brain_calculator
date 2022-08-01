@@ -9,31 +9,33 @@ part 'calc_state.dart';
 class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
   CalculationsBloc()
       : super(const CalculationsState(
-            firstOperand: 00,
-            firstOperator: '',
-            secondOperand: 00,
-            result: 0,
+            numberOne: 00,
+            operatorOne: '',
+            numberTwo: 00,
+            result: 00,
             score: 0)) {
-    on<NumberPressed>(_onNumberPressed);
     on<GetNumbersEasyEvent>(_getNumbersEasy);
     on<GetNumbersMediumEvent>(_getNumbersMedium);
+    on<GetNumbersHardEvent>(_getNumbersHard);
+    on<NumberPressed>(_onNumberPressed);
     on<NegativeInt>(_convertToNegative);
+    on<ClearNumberEvent>(_clearNumber);
   }
 
   Random random = Random();
   var listEasy = ['+', '-'];
-  var listMedium = ['+', '-', '*'];
-  bool check = false;
+  var listMedium = ['+', '-', 'x'];
+  var listHard = ['+', '-', 'x', ':'];
 
   void _getNumbersEasy(
       GetNumbersEasyEvent event, Emitter<CalculationsState> emit) {
-    int randomNumber1 = random.nextInt(100);
-    int randomNumber2 = random.nextInt(100);
-    var element = listEasy[random.nextInt(listEasy.length)];
+    int numberOne = random.nextInt(100);
+    int numberTwo = random.nextInt(100);
+    var operator = listEasy[random.nextInt(listEasy.length)];
     int score = state.score;
 
-    if (state.firstOperator == '+') {
-      var result = state.firstOperand + state.secondOperand;
+    if (state.operatorOne == '+') {
+      var result = state.numberOne + state.numberTwo;
       if (result == state.result) {
         score = state.score + 10;
       } else {
@@ -42,8 +44,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         }
       }
     }
-    if (state.firstOperator == '-') {
-      var result = state.firstOperand - state.secondOperand;
+    if (state.operatorOne == '-') {
+      var result = state.numberOne - state.numberTwo;
       if (result == state.result) {
         score = state.score + 10;
       } else {
@@ -54,126 +56,147 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
     }
 
     emit(CalculationsState(
-        firstOperand: randomNumber1,
-        firstOperator: element,
-        secondOperand: randomNumber2,
+        numberOne: numberOne,
+        operatorOne: operator,
+        numberTwo: numberTwo,
         result: 00,
         score: score));
   }
 
   void _getNumbersMedium(
       GetNumbersMediumEvent event, Emitter<CalculationsState> emit) {
-    int randomNumber1 = random.nextInt(100);
-    int randomNumber2 = random.nextInt(100);
-    var element1 = listMedium[random.nextInt(listMedium.length)];
-    var element2 = listMedium[random.nextInt(listMedium.length)];
-    int randomNumber3 = random.nextInt(100);
+    int numberOne = random.nextInt(100);
+    var operatorOne = listMedium[random.nextInt(listMedium.length)];
+    int numberTwo = random.nextInt(100);
+    var operatorTwo = listMedium[random.nextInt(listMedium.length)];
+    int numberThree = random.nextInt(100);
     var score = state.score;
 
-    if (element1 == '*') {
-      randomNumber2 = random.nextInt(10);
+    if (operatorOne == 'x') {
+      numberTwo = random.nextInt(10) + 1;
     }
-    if (element2 == '*') {
-      randomNumber3 = random.nextInt(10);
+    if (operatorTwo == 'x') {
+      numberThree = random.nextInt(10) + 1;
     }
 
-    if (state.firstOperator == '-' && state.secondOperator == '-') {
-      var result =
-          state.firstOperand - state.secondOperand - state.thirdOperand!;
+    if (state.operatorOne == '-' && state.operatorTwo == '-') {
+      var result = state.numberOne - state.numberTwo - state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '+' && state.secondOperator == '-') {
-      var result =
-          state.firstOperand + state.secondOperand - state.thirdOperand!;
+    if (state.operatorOne == '+' && state.operatorTwo == '-') {
+      var result = state.numberOne + state.numberTwo - state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '+' && state.secondOperator == '+') {
-      var result =
-          state.firstOperand + state.secondOperand + state.thirdOperand!;
+    if (state.operatorOne == '+' && state.operatorTwo == '+') {
+      var result = state.numberOne + state.numberTwo + state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '-' && state.secondOperator == '+') {
-      var result =
-          state.firstOperand - state.secondOperand + state.thirdOperand!;
+    if (state.operatorOne == '-' && state.operatorTwo == '+') {
+      var result = state.numberOne - state.numberTwo + state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '*' && state.secondOperator == '+') {
-      var result =
-          state.firstOperand * state.secondOperand + state.thirdOperand!;
+    if (state.operatorOne == 'x' && state.operatorTwo == '+') {
+      var result = state.numberOne * state.numberTwo + state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '+' && state.secondOperator == '*') {
-      var result =
-          state.firstOperand + state.secondOperand * state.thirdOperand!;
+    if (state.operatorOne == '+' && state.operatorTwo == 'x') {
+      var result = state.numberOne + state.numberTwo * state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '*' && state.secondOperator == '-') {
-      var result =
-          state.firstOperand * state.secondOperand - state.thirdOperand!;
+    if (state.operatorOne == 'x' && state.operatorTwo == '-') {
+      var result = state.numberOne * state.numberTwo - state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '-' && state.secondOperator == '*') {
-      var result =
-          state.firstOperand - state.secondOperand * state.thirdOperand!;
+    if (state.operatorOne == '-' && state.operatorTwo == 'x') {
+      var result = state.numberOne - state.numberTwo * state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
-    if (state.firstOperator == '*' && state.secondOperator == '*') {
-      var result =
-          state.firstOperand * state.secondOperand * state.thirdOperand!;
+    if (state.operatorOne == 'x' && state.operatorTwo == 'x') {
+      var result = state.numberOne * state.numberTwo * state.numberThree!;
       if (result == state.result) {
-        score = state.score + 20;
+        score = state.score + 30;
       }
       if (state.score > 0) {
-        score = state.score - 20;
+        score = state.score - 30;
       }
     }
 
     emit(CalculationsState(
-        firstOperand: randomNumber1,
-        firstOperator: element1,
-        secondOperand: randomNumber2,
-        secondOperator: element2,
-        thirdOperand: randomNumber3,
+        numberOne: numberOne,
+        operatorOne: operatorOne,
+        numberTwo: numberTwo,
+        operatorTwo: operatorTwo,
+        numberThree: numberThree,
+        result: 0,
+        score: score));
+  }
+
+  void _getNumbersHard(
+      GetNumbersHardEvent event, Emitter<CalculationsState> emit) {
+    int numberOne = random.nextInt(100);
+    var operatorOne = listHard[random.nextInt(listMedium.length)];
+    int numberTwo = random.nextInt(100);
+    var operatorTwo = listHard[random.nextInt(listHard.length)];
+    int numberThree = random.nextInt(100);
+    var operatorThree = listHard[random.nextInt(listHard.length)];
+    int numberFour = random.nextInt(100);
+    var score = state.score;
+
+    if (operatorOne == 'x') {
+      numberTwo = random.nextInt(10) + 1;
+    }
+    if (operatorTwo == 'x') {
+      numberThree = random.nextInt(10) + 1;
+    }
+
+    emit(CalculationsState(
+        numberOne: numberOne,
+        operatorOne: operatorOne,
+        numberTwo: numberTwo,
+        operatorTwo: operatorTwo,
+        numberThree: numberThree,
+        operatorThree: operatorThree,
+        numberFour: numberFour,
         result: 0,
         score: score));
   }
@@ -185,43 +208,54 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       number = int.parse('${state.result}${event.number}');
     }
 
-    if (state.secondOperator == null) {
+    if (state.operatorTwo == null) {
       emit(CalculationsState(
-          firstOperand: state.firstOperand,
-          firstOperator: state.firstOperator,
-          secondOperand: state.secondOperand,
+          numberOne: state.numberOne,
+          operatorOne: state.operatorOne,
+          numberTwo: state.numberTwo,
           result: number,
           score: state.score));
     }
     emit(CalculationsState(
-        firstOperand: state.firstOperand,
-        firstOperator: state.firstOperator,
-        secondOperand: state.secondOperand,
-        secondOperator: state.secondOperator,
-        thirdOperand: state.thirdOperand,
+        numberOne: state.numberOne,
+        operatorOne: state.operatorOne,
+        numberTwo: state.numberTwo,
+        operatorTwo: state.operatorTwo,
+        numberThree: state.numberThree,
         result: number,
         score: state.score));
   }
 
   void _convertToNegative(NegativeInt event, Emitter<CalculationsState> emit) {
-    if (state.secondOperator == null) {
+    if (state.operatorTwo == null) {
       emit(CalculationsState(
-          firstOperand: state.firstOperand,
-          firstOperator: state.firstOperator,
-          secondOperand: state.secondOperand,
+          numberOne: state.numberOne,
+          operatorOne: state.operatorOne,
+          numberTwo: state.numberTwo,
           result: -state.result.abs(),
           score: state.score));
     }
 
     emit(
       CalculationsState(
-          firstOperand: state.firstOperand,
-          firstOperator: state.firstOperator,
-          secondOperand: state.secondOperand,
-          secondOperator: state.secondOperator,
-          thirdOperand: state.thirdOperand,
+          numberOne: state.numberOne,
+          operatorOne: state.operatorOne,
+          numberTwo: state.numberTwo,
+          operatorTwo: state.operatorTwo,
+          numberThree: state.numberThree,
           result: -state.result.abs(),
           score: state.score),
     );
+  }
+
+  void _clearNumber(ClearNumberEvent event, Emitter<CalculationsState> emit) {
+    emit(CalculationsState(
+        numberOne: state.numberOne,
+        operatorOne: state.operatorOne,
+        numberTwo: state.numberTwo,
+        operatorTwo: state.operatorTwo,
+        numberThree: state.numberThree,
+        result: 0,
+        score: state.score));
   }
 }

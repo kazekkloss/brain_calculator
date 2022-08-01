@@ -27,21 +27,23 @@ class LevelsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/test');
+                  //Navigator.pushNamed(context, '/test');
                   context.read<CalculationsBloc>().add(GetNumbersEasyEvent());
+                  Navigator.pushNamed(context, '/count');
                 },
                 child: const Text('Easy')),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/test');
+                  Navigator.pushNamed(context, '/count');
                   context.read<CalculationsBloc>().add(GetNumbersMediumEvent());
                 },
                 child: const Text('Medium')),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/test');
+                  Navigator.pushNamed(context, '/count');
+                  context.read<CalculationsBloc>().add(GetNumbersHardEvent());
                 },
                 child: const Text('Hard')),
           ],

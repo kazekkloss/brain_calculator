@@ -1,7 +1,5 @@
 part of 'calc_bloc.dart';
 
-enum Levels { jeden, drugi, trzeci }
-
 abstract class CalculationsEvent extends Equatable {
   const CalculationsEvent();
 
@@ -13,6 +11,8 @@ class GetNumbersEasyEvent extends CalculationsEvent {}
 
 class GetNumbersMediumEvent extends CalculationsEvent {}
 
+class GetNumbersHardEvent extends CalculationsEvent {}
+
 class NumberPressed extends CalculationsEvent {
   final int number;
 
@@ -23,3 +23,5 @@ class NumberPressed extends CalculationsEvent {
 }
 
 class NegativeInt extends CalculationsEvent {}
+
+class ClearNumberEvent extends CalculationsEvent {}

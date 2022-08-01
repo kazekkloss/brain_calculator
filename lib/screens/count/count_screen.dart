@@ -1,11 +1,9 @@
-import 'package:calculator/blocs/calc/calc_bloc.dart';
-import 'package:calculator/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/display_calc_widget.dart';
 import '../../widgets/widgets.dart';
 
-class CountScreen extends StatelessWidget {
+class CountScreen extends StatefulWidget {
   const CountScreen({Key? key}) : super(key: key);
   static const String routeName = '/count';
 
@@ -16,46 +14,29 @@ class CountScreen extends StatelessWidget {
   }
 
   @override
+  State<CountScreen> createState() => _CountScreenState();
+}
+
+
+
+class _CountScreenState extends State<CountScreen> {
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CalculationsBloc, CalculationsState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Color.fromARGB(255, 0, 110, 200),
-          body: Column(
-            children: [
-              const SizedBox(
-                height: 100,
-              ),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),boxShadow: [
-              BoxShadow(
-                blurRadius: 13,
-                offset: Offset(-10, -10),
-                color: Color.fromARGB(255, 0, 57, 103),
-              ),
-              BoxShadow(
-                blurRadius: 13,
-                offset: Offset(10, 10),
-                color: Color.fromARGB(255, 0, 57, 103),
-              )
-            ]),
-                  child: const SizedBox(
-                    height: 200,
-                    width: 300,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              const KeyboardWidget(),
-            ],
+    
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 0, 110, 200),
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 70,
           ),
-        );
-      },
+          DisplayCalculationWidget(),
+          const SizedBox(
+            height: 30,
+          ),
+          const KeyboardWidget(),
+        ],
+      ),
     );
   }
 }

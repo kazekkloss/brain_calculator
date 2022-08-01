@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/calc/calc_bloc.dart';
+import 'blocs/player/player_bloc.dart';
 import 'config/router.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,8 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CalculationsBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CalculationsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PlayerBloc(),
+        ),
+      ],
       child: const MaterialApp(
         onGenerateRoute: AppRouter.onGenereateRoute,
         initialRoute: SplashScreen.routeName,
