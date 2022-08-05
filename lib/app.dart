@@ -1,11 +1,10 @@
-import 'package:calculator/screens/screens.dart';
-import 'package:calculator/screens/testing_screen.dart';
+import 'package:calculator/screens/test_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'blocs/calc/calc_bloc.dart';
-import 'blocs/player/player_bloc.dart';
-import 'config/router.dart';
+import 'package:calculator/blocs/blocs_export.dart';
+import 'package:calculator/config/config.dart';
+import 'package:calculator/screens/screens.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,13 +17,13 @@ class MyApp extends StatelessWidget {
           create: (context) => CalculationsBloc(),
         ),
         BlocProvider(
-          create: (context) => PlayerBloc(),
+          create: (context) => ScoreBloc(),
         ),
       ],
       child: const MaterialApp(
         onGenerateRoute: AppRouter.onGenereateRoute,
         initialRoute: SplashScreen.routeName,
-        //home: TestingScreen(),
+        //home: TestScreen(),
       ),
     );
   }

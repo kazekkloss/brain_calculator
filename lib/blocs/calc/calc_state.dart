@@ -1,5 +1,7 @@
 part of 'calc_bloc.dart';
 
+enum Levels { easy, medium, hard }
+
 class CalculationsState extends Equatable {
   final int numberOne;
   final String operatorOne;
@@ -10,6 +12,7 @@ class CalculationsState extends Equatable {
   final int? numberFour;
   final int result;
   final int score;
+  final Enum levels;
   const CalculationsState(
       {required this.numberOne,
       required this.operatorOne,
@@ -19,7 +22,8 @@ class CalculationsState extends Equatable {
       this.operatorThree,
       this.numberFour,
       required this.result,
-      required this.score});
+      required this.score,
+      required this.levels});
 
   @override
   List<Object> get props => [numberOne, operatorOne, numberTwo, result, score];

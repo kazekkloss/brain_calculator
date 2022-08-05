@@ -21,8 +21,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = widget.isNumber
-        ? Color.fromARGB(255, 130, 209, 255)
-        : Color.fromARGB(255, 136, 0, 255);
+        ? const Color.fromARGB(255, 130, 209, 255)
+        : const Color.fromARGB(255, 136, 0, 255);
     Offset distance = isPressed ? const Offset(1, 1) : const Offset(5, 5);
     double blur = isPressed ? 3.0 : 13.0;
     TextStyle size = isPressed
@@ -68,64 +68,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                 style: size.copyWith(
                     color: widget.isNumber
                         ? const Color.fromARGB(255, 0, 127, 230)
-                        : Color.fromARGB(255, 255, 255, 255)),
+                        : const Color.fromARGB(255, 255, 255, 255)),
               )),
             )));
   }
 }
-
-// class ButtonWidget extends StatefulWidget {
-//   final bool isNumber;
-//   final String text;
-//   final VoidCallback numberPressed;
-//   const ButtonWidget({
-//     required this.text,
-//     required this.isNumber,
-//     required this.numberPressed,
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   State<ButtonWidget> createState() => _ButtonWidgetState();
-// }
-
-// class _ButtonWidgetState extends State<ButtonWidget> {
-//   bool isPressed = true;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Ink(
-//       width: 75,
-//       height: 75,
-//       decoration: const BoxDecoration(
-//         color: Color.fromARGB(255, 0, 153, 176),
-//         shape: BoxShape.circle,
-//         boxShadow: [
-//           BoxShadow(
-//             inset: true,
-//             color: Color.fromARGB(112, 0, 0, 0),
-//             offset: Offset(3, 3),
-//             blurRadius: 6.0,
-//           ),
-//           BoxShadow(
-//               inset: true,
-//               color: Color.fromARGB(188, 255, 255, 255),
-//               offset: Offset(-3, -3),
-//               blurRadius: 6.0),
-//         ],
-//       ),
-//       child: InkWell(
-//         onTap: () {
-//           widget.numberPressed();
-//         },
-//         customBorder: const CircleBorder(),
-//         child: Center(
-//           child: Text(
-//             widget.text,
-//             style: const TextStyle(color: Colors.white, fontSize: 30),
-//           ),
-//         ),
-//         splashColor: Color.fromARGB(255, 0, 113, 130),
-//       ),
-//     );
-//   }
-// }

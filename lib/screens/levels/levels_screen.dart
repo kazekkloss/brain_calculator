@@ -1,8 +1,7 @@
-import 'package:calculator/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/calc/calc_bloc.dart';
+import '../../blocs/blocs_export.dart';
+
 
 class LevelsScreen extends StatelessWidget {
   const LevelsScreen({Key? key}) : super(key: key);
@@ -27,23 +26,22 @@ class LevelsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
-                  //Navigator.pushNamed(context, '/test');
-                  context.read<CalculationsBloc>().add(GetNumbersEasyEvent());
-                  Navigator.pushNamed(context, '/count');
+                  Navigator.pushNamed(context, '/counting_down',
+                      arguments: Levels.easy);
                 },
                 child: const Text('Easy')),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/count');
-                  context.read<CalculationsBloc>().add(GetNumbersMediumEvent());
+                  Navigator.pushNamed(context, '/counting_down',
+                      arguments: Levels.medium);
                 },
                 child: const Text('Medium')),
             const SizedBox(height: 20),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/count');
-                  context.read<CalculationsBloc>().add(GetNumbersHardEvent());
+                  Navigator.pushNamed(context, '/counting_down',
+                      arguments: Levels.hard);
                 },
                 child: const Text('Hard')),
           ],

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:calculator/blocs/blocs_export.dart';
+import 'package:calculator/model/score_model.dart';
+import 'package:intl/intl.dart';
+
 class ScoreScreen extends StatelessWidget {
   const ScoreScreen({Key? key}) : super(key: key);
 
@@ -13,9 +17,53 @@ class ScoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Center(
-      child: Text('Score screen'),
-    ));
+    return BlocBuilder<ScoreBloc, ScoreState>(
+      builder: (context, state) {
+        List<Score> testList = state.scoreList;
+        return Scaffold(
+            appBar: AppBar(),
+            body: Center(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  const Text('Score'),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: testList.length,
+                        itemBuilder: (context, index) {
+                          var task = testList[index];
+                          return Container(
+                            color: Colors.amber,
+                            child: SizedBox(
+                                child: Column(children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(DateFormat()
+                                  .add_yMMMd()
+                                  .add_Hms()
+                                  .format(DateTime.parse(task.date))),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(task.score.toString()),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(task.level),
+                            ])),
+                          );
+                        }),
+                  )
+                ],
+              ),
+            ));
+      },
+    );
   }
 }
