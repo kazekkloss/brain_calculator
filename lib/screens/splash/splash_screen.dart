@@ -19,10 +19,10 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    //Timer(
-        //const Duration(seconds: 3),
-        //(() => Navigator.of(context).pushNamedAndRemoveUntil(
-           // HomeScreen.routeName, ModalRoute.withName('/home'))));
+    Timer(
+        const Duration(seconds: 3),
+        (() => Navigator.of(context).pushNamedAndRemoveUntil(
+            HomeScreen.routeName, ModalRoute.withName('/home'))));
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -31,15 +31,14 @@ class SplashScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: height / 5,
-                        bottom: height / 15),
+                    padding:
+                        EdgeInsets.only(top: height / 5, bottom: height / 15),
                     child: Text(
                       'Brain Calculator',
                       style: TextStyle(
-                          fontSize: width/10,
-                          fontFamily: 'Play',
-                          fontWeight: FontWeight.w700,
+                          fontSize: width / 10,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w300,
                           color: Color.fromARGB(255, 255, 255, 255)),
                       textAlign: TextAlign.center,
                     ),

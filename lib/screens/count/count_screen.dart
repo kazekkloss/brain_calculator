@@ -7,7 +7,7 @@ import '../../widgets/widgets.dart';
 
 class CountScreen extends StatefulWidget {
   const CountScreen({Key? key}) : super(key: key);
-  
+
   static const String routeName = '/count';
 
   static Route route() {
@@ -53,31 +53,33 @@ class _CountScreenState extends State<CountScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<CalculationsBloc, CalculationsState>(
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: const Color.fromARGB(255, 0, 110, 200),
-          body: Column(
-            children: [
-              const SizedBox(
-                height: 70,
-              ),
-              DisplayCalculationWidget(
-                numberOne: state.numberOne,
-                operatorOne: state.operatorOne,
-                numberTwo: state.numberTwo,
-                operatorTwo: state.operatorTwo,
-                numberThree: state.numberThree,
-                operatorThree: state.operatorThree,
-                numberFour: state.numberFour,
-                result: state.result,
-                score: state.score,
-                timer: _current,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const KeyboardWidget(),
-            ],
+        var height = MediaQuery.of(context).size.height;
+        return WillPopScope(
+          child: Scaffold(
+            backgroundColor: const Color.fromARGB(255, 0, 110, 200),
+            body: Column(
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: height / 18, bottom: height / 60),
+                  child: DisplayCalculationWidget(
+                    numberOne: state.numberOne,
+                    operatorOne: state.operatorOne,
+                    numberTwo: state.numberTwo,
+                    operatorTwo: state.operatorTwo,
+                    numberThree: state.numberThree,
+                    result: state.result,
+                    score: state.score,
+                    timer: _current,
+                  ),
+                ),
+                const KeyboardWidget(),
+              ],
+            ),
           ),
+          onWillPop: () async {
+            return false;
+          },
         );
       },
     );

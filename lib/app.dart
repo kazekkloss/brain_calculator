@@ -5,7 +5,6 @@ import 'package:calculator/blocs/blocs_export.dart';
 import 'package:calculator/config/config.dart';
 import 'package:calculator/screens/screens.dart';
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -20,7 +19,9 @@ class MyApp extends StatelessWidget {
           create: (context) => ScoreBloc(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: theme(),
         onGenerateRoute: AppRouter.onGenereateRoute,
         initialRoute: SplashScreen.routeName,
         //home: TestScreen(),

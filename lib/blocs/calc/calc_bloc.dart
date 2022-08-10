@@ -25,15 +25,14 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
   }
 
   Random random = Random();
-  var listEasy = ['+', '-'];
-  var listMedium = ['+', '-', 'x'];
-  var listHard = ['+', '-', 'x', ':'];
+  var listOperators = ['+', '-'];
+  var listOperatorsHard = ['+', '-', 'x'];
 
   void _getNumbersEasy(
       GetNumbersEasyEvent event, Emitter<CalculationsState> emit) {
     int numberOne = random.nextInt(100);
-    int numberTwo = random.nextInt(100);
-    var operator = listEasy[random.nextInt(listEasy.length)];
+    int numberTwo = random.nextInt(min(numberOne, 100));
+    var operator = listOperators[random.nextInt(listOperators.length)];
     int score = state.score;
 
     if (state.operatorOne == '+') {
@@ -68,66 +67,14 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
 
   void _getNumbersMedium(
       GetNumbersMediumEvent event, Emitter<CalculationsState> emit) {
-    int numberOne = random.nextInt(100);
-    var operatorOne = listMedium[random.nextInt(listMedium.length)];
-    int numberTwo = random.nextInt(100);
-    var operatorTwo = listMedium[random.nextInt(listMedium.length)];
+    int numberOne = random.nextInt(10) + 1;
+    var operatorOne = 'x';
+    int numberTwo = random.nextInt(20) + 1;
+    var operatorTwo = listOperators[random.nextInt(listOperators.length)];
     int numberThree = random.nextInt(100);
     var score = state.score;
 
-    if (operatorOne == 'x') {
-      numberTwo = random.nextInt(10) + 1;
-    }
-    if (operatorTwo == 'x') {
-      numberThree = random.nextInt(10) + 1;
-    }
-    if (operatorOne == 'x' && operatorTwo == 'x') {
-      numberOne = random.nextInt(10) + 1;
-      numberTwo = random.nextInt(10) + 1;
-      numberThree = random.nextInt(10) + 1;
-    }
-
-    if (state.operatorOne == '-' && state.operatorTwo == '-') {
-      var result = state.numberOne - state.numberTwo - state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == '+' && state.operatorTwo == '-') {
-      var result = state.numberOne + state.numberTwo - state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == '+' && state.operatorTwo == '+') {
-      var result = state.numberOne + state.numberTwo + state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == '-' && state.operatorTwo == '+') {
-      var result = state.numberOne - state.numberTwo + state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == 'x' && state.operatorTwo == '+') {
+    if (state.operatorTwo == '+') {
       var result = state.numberOne * state.numberTwo + state.numberThree!;
       if (result == state.result) {
         score = state.score + 30;
@@ -137,38 +84,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         }
       }
     }
-    if (state.operatorOne == '+' && state.operatorTwo == 'x') {
-      var result = state.numberOne + state.numberTwo * state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == 'x' && state.operatorTwo == '-') {
-      var result = state.numberOne * state.numberTwo - state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == '-' && state.operatorTwo == 'x') {
-      var result = state.numberOne - state.numberTwo * state.numberThree!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-    if (state.operatorOne == 'x' && state.operatorTwo == 'x') {
-      var result = state.numberOne * state.numberTwo * state.numberThree!;
+    if (state.operatorTwo == '-') {
+      var result = state.numberOne * state.numberTwo + state.numberThree!;
       if (result == state.result) {
         score = state.score + 30;
       } else {
@@ -192,12 +109,12 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
   void _getNumbersHard(
       GetNumbersHardEvent event, Emitter<CalculationsState> emit) {
     int numberOne = random.nextInt(100);
-    var operatorOne = listHard[random.nextInt(listMedium.length)];
+    var operatorOne =
+        listOperatorsHard[random.nextInt(listOperatorsHard.length)];
     int numberTwo = random.nextInt(100);
-    var operatorTwo = listHard[random.nextInt(listHard.length)];
+    var operatorTwo =
+        listOperatorsHard[random.nextInt(listOperatorsHard.length)];
     int numberThree = random.nextInt(100);
-    var operatorThree = listHard[random.nextInt(listHard.length)];
-    int numberFour = random.nextInt(100);
     var score = state.score;
 
     if (operatorOne == 'x') {
@@ -212,962 +129,93 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       numberThree = random.nextInt(10) + 1;
     }
 
-    //----------------------
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne +
-          state.numberTwo +
-          state.numberThree! +
-          state.numberFour!;
+    if (state.operatorOne == '-' && state.operatorTwo == '-') {
+      var result = state.numberOne - state.numberTwo - state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne +
-          state.numberTwo +
-          state.numberThree! -
-          state.numberFour!;
+    if (state.operatorOne == '+' && state.operatorTwo == '-') {
+      var result = state.numberOne + state.numberTwo - state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne +
-          state.numberTwo +
-          state.numberThree! / state.numberFour!;
+    if (state.operatorOne == '+' && state.operatorTwo == '+') {
+      var result = state.numberOne + state.numberTwo + state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne +
-          state.numberTwo +
-          state.numberThree! * state.numberFour!;
+    if (state.operatorOne == '-' && state.operatorTwo == '+') {
+      var result = state.numberOne - state.numberTwo + state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne +
-          state.numberTwo -
-          state.numberThree! +
-          state.numberFour!;
+    if (state.operatorOne == 'x' && state.operatorTwo == '+') {
+      var result = state.numberOne * state.numberTwo + state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne +
-          state.numberTwo -
-          state.numberThree! -
-          state.numberFour!;
+    if (state.operatorOne == '+' && state.operatorTwo == 'x') {
+      var result = state.numberOne + state.numberTwo * state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne +
-          state.numberTwo -
-          state.numberThree! / state.numberFour!;
+    if (state.operatorOne == 'x' && state.operatorTwo == '-') {
+      var result = state.numberOne * state.numberTwo - state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne +
-          state.numberTwo -
-          state.numberThree! * state.numberFour!;
+    if (state.operatorOne == '-' && state.operatorTwo == 'x') {
+      var result = state.numberOne - state.numberTwo * state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne +
-          state.numberTwo * state.numberThree! +
-          state.numberFour!;
+    if (state.operatorOne == 'x' && state.operatorTwo == 'x') {
+      var result = state.numberOne * state.numberTwo * state.numberThree!;
       if (result == state.result) {
-        score = state.score + 30;
+        score = state.score + 60;
       } else {
         if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne +
-          state.numberTwo * state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne +
-          state.numberTwo * state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne +
-          state.numberTwo * state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne +
-          state.numberTwo / state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne +
-          state.numberTwo / state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne +
-          state.numberTwo / state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '+' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne +
-          state.numberTwo / state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    //----------------------
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne -
-          state.numberTwo +
-          state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne -
-          state.numberTwo +
-          state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne -
-          state.numberTwo +
-          state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne -
-          state.numberTwo +
-          state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne -
-          state.numberTwo -
-          state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne -
-          state.numberTwo -
-          state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne -
-          state.numberTwo -
-          state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne -
-          state.numberTwo -
-          state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne -
-          state.numberTwo * state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne -
-          state.numberTwo * state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne -
-          state.numberTwo * state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne -
-          state.numberTwo * state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne -
-          state.numberTwo / state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne -
-          state.numberTwo / state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne -
-          state.numberTwo / state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == '-' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne -
-          state.numberTwo / state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    //----------------------
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne * state.numberTwo +
-          state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne * state.numberTwo +
-          state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne * state.numberTwo +
-          state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne * state.numberTwo +
-          state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne * state.numberTwo -
-          state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne * state.numberTwo -
-          state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne * state.numberTwo -
-          state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne * state.numberTwo -
-          state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne * state.numberTwo * state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne * state.numberTwo * state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne *
-          state.numberTwo *
-          state.numberThree! /
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne *
-          state.numberTwo *
-          state.numberThree! *
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne * state.numberTwo / state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne * state.numberTwo / state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne *
-          state.numberTwo /
-          state.numberThree! /
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == 'x' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne *
-          state.numberTwo /
-          state.numberThree! *
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    //----------------------
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne / state.numberTwo +
-          state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne / state.numberTwo +
-          state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne / state.numberTwo +
-          state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '+' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne / state.numberTwo +
-          state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne / state.numberTwo -
-          state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne / state.numberTwo -
-          state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne / state.numberTwo -
-          state.numberThree! / state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == '-' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne / state.numberTwo -
-          state.numberThree! * state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne / state.numberTwo * state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne / state.numberTwo * state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne /
-          state.numberTwo *
-          state.numberThree! /
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == 'x' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne /
-          state.numberTwo *
-          state.numberThree! *
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '+') {
-      var result = state.numberOne / state.numberTwo / state.numberThree! +
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == '-') {
-      var result = state.numberOne / state.numberTwo / state.numberThree! -
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == ':') {
-      var result = state.numberOne /
-          state.numberTwo /
-          state.numberThree! /
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
-        }
-      }
-    }
-
-    if (state.operatorOne == ':' &&
-        state.operatorTwo == ':' &&
-        state.operatorThree == 'x') {
-      var result = state.numberOne /
-          state.numberTwo /
-          state.numberThree! *
-          state.numberFour!;
-      if (result == state.result) {
-        score = state.score + 30;
-      } else {
-        if (state.score > 0) {
-          score = state.score - 30;
+          score = state.score - 60;
         }
       }
     }
@@ -1178,8 +226,6 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         numberTwo: numberTwo,
         operatorTwo: operatorTwo,
         numberThree: numberThree,
-        operatorThree: operatorThree,
-        numberFour: numberFour,
         result: 0,
         score: score,
         levels: Levels.hard));

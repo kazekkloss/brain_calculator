@@ -7,9 +7,9 @@ abstract class ScoreEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class Test extends ScoreEvent {
+class AddScore extends ScoreEvent {
   final Score score;
-  const Test({required this.score});
+  const AddScore({required this.score});
 
   @override
   List<Object> get props => [score];

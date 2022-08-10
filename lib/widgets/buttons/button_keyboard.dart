@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
-class ButtonWidget extends StatefulWidget {
+class ButtonKeyboardWidget extends StatefulWidget {
   final bool isNumber;
   final String text;
   final VoidCallback onTap;
-  const ButtonWidget({
+  const ButtonKeyboardWidget({
     required this.text,
     required this.isNumber,
     required this.onTap,
@@ -13,13 +13,15 @@ class ButtonWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ButtonWidget> createState() => _ButtonWidgetState();
+  State<ButtonKeyboardWidget> createState() => _ButtonKeyboardWidgetState();
 }
 
-class _ButtonWidgetState extends State<ButtonWidget> {
+class _ButtonKeyboardWidgetState extends State<ButtonKeyboardWidget> {
   bool isPressed = false;
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     Color backgroundColor = widget.isNumber
         ? const Color.fromARGB(255, 130, 209, 255)
         : const Color.fromARGB(255, 136, 0, 255);
@@ -60,8 +62,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
                   )
                 ]),
             child: SizedBox(
-              height: 70,
-              width: 70,
+              height: height/10,
+              width: height/10,
               child: Center(
                   child: Text(
                 widget.text,

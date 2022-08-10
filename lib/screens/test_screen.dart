@@ -7,15 +7,13 @@ class TestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 0, 152, 117),
-        child: Center(child: Column(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween ,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(100.0),
-              child: Text('MENU'),
-            )
+            Text('dupa'),
+            Text('dupa')
           ],
-        )),
+        ),
       ),
     );
   }

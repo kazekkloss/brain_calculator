@@ -3,22 +3,30 @@ import 'package:equatable/equatable.dart';
 class Score extends Equatable {
   final String date;
   final String level;
-  final int score;
+  final int points;
 
-  const Score({required this.date, required this.level, required this.score});
+  const Score({
+    required this.date, 
+    required this.level, 
+    required this.points});
 
-  Score copyWith({String? date, String? level, int? score}) {
+  Score copyWith({
+    String? date,
+    String? level,
+    int? points,
+  }) {
     return Score(
-        date: date ?? this.date,
-        level: level ?? this.level,
-        score: score ?? this.score);
+      date: date ?? this.date,
+      level: level ?? this.level,
+      points: points ?? this.points,
+    );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'date': date,
       'level': level,
-      'score': score,
+      'points': points,
     };
   }
 
@@ -26,9 +34,9 @@ class Score extends Equatable {
     return Score(
         date: map['date'] ?? '',
         level: map['level'] ?? '',
-        score: map['score'] ?? '');
+        points: map['points'] ?? '');
   }
 
   @override
-  List<Object?> get props => [date, level, score];
+  List<Object?> get props => [date, level, points];
 }

@@ -1,20 +1,27 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../../model/score_model.dart';
 
 part 'score_event.dart';
 part 'score_state.dart';
 
-class ScoreBloc extends Bloc<ScoreEvent, ScoreState> {
+class ScoreBloc extends HydratedBloc<ScoreEvent, ScoreState> {
   ScoreBloc() : super(const ScoreState()) {
-    on<Test>(_onTest);
+    on<AddScore>(_onAdd);
   }
 
-  void _onTest(Test event, Emitter emit) {
+  void _onAdd(AddScore event, Emitter emit) {
     final state = this.state;
-    if (state.scoreList.length < 10) {
-      emit(ScoreState(scoreList: List.from(state.scoreList)..add(event.score)));
+    if (state.scoreList.length != 10) {
+      state.scoreList.add(event.score);
+      state.scoreList.sort((a, b) => b.points.compareTo(a.points));
+      emit(ScoreState(scoreList: state.scoreList));
+    } else if (state.scoreList.last.points < event.score.points) {
+      state.scoreList.remove(state.scoreList.last);
+      state.scoreList.add(event.score);
+      state.scoreList.sort((a, b) => b.points.compareTo(a.points));
+      emit(ScoreState(scoreList: state.scoreList));
     }
   }
 

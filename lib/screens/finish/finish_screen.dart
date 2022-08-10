@@ -35,13 +35,16 @@ class _FinishScreenState extends State<FinishScreen> {
     var score = Score(
         date: DateTime.now().toString(),
         level: level,
-        score: calcBloc.state.score);
-    context.read<ScoreBloc>().add(Test(score: score));
+        points: calcBloc.state.score);
+    if (calcBloc.state.score > 0) {
+      context.read<ScoreBloc>().add(AddScore(score: score));
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return BlocBuilder<CalculationsBloc, CalculationsState>(
       builder: (context, state) {
         final score = state.score;
@@ -51,52 +54,54 @@ class _FinishScreenState extends State<FinishScreen> {
             : state.levels == Levels.medium
                 ? level = 'medium'
                 : level = 'hard';
-        return Scaffold(
-          body: Center(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 200,
-                ),
-                Text('Your score: $score'),
-                state.score == 0
-                    ? const SizedBox(
-                        height: 400,
-                        width: 400,
-                        child: RiveAnimation.asset(
-                          Assets.badCalc,
-                          fit: BoxFit.cover,
+        return WillPopScope(
+          child: Scaffold(
+            body: Center(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: height / 10),
+                    child: Text('Your score: $score'),
+                  ),
+                  state.score == 0
+                      ? SizedBox(
+                          height: height / 2,
+                          width: height / 2,
+                          child: const RiveAnimation.asset(
+                            Assets.badCalc,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : SizedBox(
+                          height: height / 2,
                         ),
-                      )
-                    : const SizedBox(
-                        height: 400,
-                      ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Text('on $level level'),
-                const SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                        child: const Text('Back to menu')),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/counting_down',
-                              arguments: state.levels);
-                        },
-                        child: const Text('Resume'))
-                  ],
-                )
-              ],
+                  Padding(
+                    padding: EdgeInsets.all(height / 20),
+                    child: Text('on $level level'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
+                          child: const Text('Back to menu')),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/counting_down',
+                                arguments: state.levels);
+                          },
+                          child: const Text('Resume'))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
+          onWillPop: () async {
+            return false;
+          },
         );
       },
     );

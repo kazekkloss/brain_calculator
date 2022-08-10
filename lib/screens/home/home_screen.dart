@@ -1,4 +1,7 @@
+import 'package:calculator/widgets/buttons/button_home.dart';
 import 'package:flutter/material.dart';
+
+import '../../config/config.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,49 +16,67 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: Container(
-                    decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(0.8, 1),
-            colors: <Color>[
-              Color.fromARGB(255, 0, 95, 95),
-              Color.fromARGB(255, 19, 164, 0)
-            ],
-            tileMode: TileMode.mirror,
-          )
-      
-      
-            ),
-          child: Center(
-              child: Padding(
-          padding: const EdgeInsets.only(top: 100),
+        body: CustomTheme().gradientContainer(Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: height / 14,),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Text('Home Screen'),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, '/levels',);
-                  },
-                  child: const Text('Start')),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, '/score');
-                  },
-                  child: const Text('Score')),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, '/settings');
-                  },
-                  child: const Text('Settings')),
+              Text(
+                'Home',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(fontSize: height / 17),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: height / 13),
+                child: Column(
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.symmetric(vertical: height / 30),
+                        child: ButtonHome(
+                            navigate: () async {
+                              await Navigator.pushNamed(context, '/levels');
+                            },
+                            text: 'Start')),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: height / 30),
+                      child: ButtonHome(
+                          navigate: () async {
+                            await Navigator.pushNamed(context, '/score');
+                          },
+                          text: 'Score'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: height / 30),
+                      child: ButtonHome(
+                          navigate: () async {
+                            await Navigator.pushNamed(context, '/settings');
+                          },
+                          text: 'Settings'),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-              ),
-            ),
-        ));
+        ),
+        SizedBox(
+          height: height / 4.5,
+          width: height,
+          child: const RiveAnimation.asset(
+            Assets.homeCalc,
+            alignment: Alignment.bottomLeft,
+            fit: BoxFit.fitHeight,
+          ),
+        ),
+      ],
+    )));
   }
 }

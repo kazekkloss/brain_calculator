@@ -27,11 +27,13 @@ class DisplayCalculationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Center(
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(width / 15),
             boxShadow: const [
               BoxShadow(
                 blurRadius: 13,
@@ -45,8 +47,8 @@ class DisplayCalculationWidget extends StatelessWidget {
               )
             ]),
         child: SizedBox(
-            height: 200,
-            width: 300,
+            height: height / 4,
+            width: width / 1.15,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,32 +63,24 @@ class DisplayCalculationWidget extends StatelessWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: EdgeInsets.only(top: height / 60),
                       child: Text(
                         'Score $score',
                         style: const TextStyle(fontSize: 20),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      padding: EdgeInsets.symmetric(vertical: height / 30),
                       child: Center(
-                          child: numberFour == null
-                              ? numberThree == null
-                                  ? Text('$numberOne '
-                                      '$operatorOne '
-                                      '$numberTwo')
-                                  : Text('$numberOne '
-                                      '$operatorOne '
-                                      '$numberTwo '
-                                      '$operatorTwo '
-                                      '$numberThree')
+                          child: numberThree == null
+                              ? Text('$numberOne '
+                                  '$operatorOne '
+                                  '$numberTwo')
                               : Text('$numberOne '
                                   '$operatorOne '
                                   '$numberTwo '
                                   '$operatorTwo '
-                                  '$numberThree '
-                                  '$operatorThree '
-                                  '$numberFour')),
+                                  '$numberThree')),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
