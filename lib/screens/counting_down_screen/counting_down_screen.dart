@@ -4,6 +4,7 @@ import 'package:quiver/async.dart';
 import 'package:calculator/blocs/blocs_export.dart';
 
 import '../../config/config.dart';
+import '../../widgets/widgets.dart';
 
 class CountingDownScreen extends StatefulWidget {
   final Enum levels;
@@ -65,17 +66,30 @@ class _CountingDownScreenState extends State<CountingDownScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return WillPopScope(
       child: Scaffold(
-        body: Center(
-          child: const RiveAnimation.asset(
-            Assets.homeCalc,
-            fit: BoxFit.cover,
+        body: GradientContainer(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: height / 6),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TickerWidget(height: height, current: _current),
+                  SizedBox(
+                    height: height / 2.4,
+                    width: width,
+                    child: const RiveAnimation.asset(
+                      Assets.flagCalc,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          //child: Text(
-          //'$_current',
-          //style: const TextStyle(fontSize: 100),
-          //),
         ),
       ),
       onWillPop: () async {
@@ -84,3 +98,4 @@ class _CountingDownScreenState extends State<CountingDownScreen> {
     );
   }
 }
+

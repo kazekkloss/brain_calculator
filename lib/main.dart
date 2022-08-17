@@ -11,5 +11,5 @@ void main() async {
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   final storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
-  HydratedBlocOverrides.runZoned(() => runApp(MyApp()), storage: storage);
+  HydratedBlocOverrides.runZoned(() => runApp(const BrainCaclculator()), storage: storage);
 }

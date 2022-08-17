@@ -14,3 +14,9 @@ class AddScore extends ScoreEvent {
   @override
   List<Object> get props => [score];
 }
+
+//to remove
+class RemoveScore extends ScoreEvent {
+  final Score score;
+  const RemoveScore({required this.score});
+}

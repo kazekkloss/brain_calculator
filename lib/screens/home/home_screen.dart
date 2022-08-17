@@ -1,7 +1,7 @@
-import 'package:calculator/widgets/buttons/button_home.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/config.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,23 +17,23 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: CustomTheme().gradientContainer(Column(
+        body: GradientContainer(
+            child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: height / 14,),
+          padding: EdgeInsets.only(
+            top: height / 14,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                'Home',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1!
-                    .copyWith(fontSize: height / 17),
-              ),
+              Text('Home',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(fontSize: height / 17)),
               Padding(
                 padding: EdgeInsets.only(top: height / 13),
                 child: Column(
@@ -54,13 +54,18 @@ class HomeScreen extends StatelessWidget {
                           text: 'Score'),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: height / 30),
-                      child: ButtonHome(
-                          navigate: () async {
-                            await Navigator.pushNamed(context, '/settings');
-                          },
-                          text: 'Settings'),
-                    ),
+                        padding: EdgeInsets.only(top: height / 30),
+                        child: TextButton(
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LicensesWidget())),
+                          child: Text(
+                            'Licenses',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(
+                                    fontSize: height / 43, color: Colors.white),
+                          ),
+                        )),
                   ],
                 ),
               ),

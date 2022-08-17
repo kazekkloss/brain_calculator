@@ -16,8 +16,6 @@ class AppRouter {
         return CountingDownScreen.route(levels: settings.arguments as Enum);
       case FinishScreen.routeName:
         return FinishScreen.route();
-      case SettingsScreen.routeName:
-        return SettingsScreen.route();
       case ScoreScreen.routeName:
         return ScoreScreen.route();
       default:

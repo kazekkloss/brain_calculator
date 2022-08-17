@@ -9,12 +9,14 @@ class CalculationsState extends Equatable {
   final String? operatorTwo;
   final int? numberThree;
   final int result;
+  final int? answer;
   final int score;
   final Enum levels;
   const CalculationsState(
       {required this.numberOne,
       required this.operatorOne,
       required this.numberTwo,
+      this.answer,
       this.operatorTwo,
       this.numberThree,
       required this.result,

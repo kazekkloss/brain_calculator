@@ -1,8 +1,10 @@
+import 'package:calculator/widgets/bottom_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:calculator/blocs/blocs_export.dart';
 import 'package:calculator/model/score_model.dart';
 import 'package:calculator/config/config.dart';
+
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({
@@ -33,6 +35,7 @@ class _FinishScreenState extends State<FinishScreen> {
             ? level = 'medium'
             : level = 'hard';
     var score = Score(
+        id: GUIDGen.generate(),
         date: DateTime.now().toString(),
         level: level,
         points: calcBloc.state.score);
@@ -56,46 +59,57 @@ class _FinishScreenState extends State<FinishScreen> {
                 : level = 'hard';
         return WillPopScope(
           child: Scaffold(
-            body: Center(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: height / 10),
-                    child: Text('Your score: $score'),
-                  ),
-                  state.score == 0
-                      ? SizedBox(
-                          height: height / 2,
-                          width: height / 2,
-                          child: const RiveAnimation.asset(
-                            Assets.badCalc,
-                            fit: BoxFit.cover,
+            body: GradientContainer(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: height / 10),
+                      child: Text(
+                        'Your score:',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(fontSize: height / 30),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: height / 100),
+                      child: Text(
+                        score.toString(),
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    ),
+                    state.score == 0
+                        ? SizedBox(
+                            height: height / 3.4,
+                            width: height / 2,
+                            child: const RiveAnimation.asset(
+                              Assets.badCalc,
+                              fit: BoxFit.contain,
+                              alignment: Alignment(0, 1),
+                            ),
+                          )
+                        : SizedBox(
+                            height: height / 3.4,
+                            width: height / 2,
+                            child: const RiveAnimation.asset(
+                              Assets.victoryCalc,
+                              fit: BoxFit.fitHeight,
+                              alignment: Alignment(0.3, 1),
+                            ),
                           ),
-                        )
-                      : SizedBox(
-                          height: height / 2,
-                        ),
-                  Padding(
-                    padding: EdgeInsets.all(height / 20),
-                    child: Text('on $level level'),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/home');
-                          },
-                          child: const Text('Back to menu')),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/counting_down',
-                                arguments: state.levels);
-                          },
-                          child: const Text('Resume'))
-                    ],
-                  )
-                ],
+                    Text(
+                      'On $level level',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3!
+                          .copyWith(fontSize: height / 30),
+                    ),
+                    const BottomWidget(oneButton: false)
+                  ],
+                ),
               ),
             ),
           ),

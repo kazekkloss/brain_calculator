@@ -30,13 +30,15 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
 
   void _getNumbersEasy(
       GetNumbersEasyEvent event, Emitter<CalculationsState> emit) {
-    int numberOne = random.nextInt(100);
-    int numberTwo = random.nextInt(min(numberOne, 100));
+    int numberOne = random.nextInt(100) + 1;
+    int numberTwo = random.nextInt(min(numberOne, 100) + 1);
     var operator = listOperators[random.nextInt(listOperators.length)];
     int score = state.score;
+    int? answer;
 
     if (state.operatorOne == '+') {
-      var result = state.numberOne + state.numberTwo;
+      int result = state.numberOne + state.numberTwo;
+      answer = result;
       if (result == state.result) {
         score = state.score + 10;
       } else {
@@ -46,7 +48,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == '-') {
-      var result = state.numberOne - state.numberTwo;
+      int result = state.numberOne - state.numberTwo;
+      answer = result;
       if (result == state.result) {
         score = state.score + 10;
       } else {
@@ -60,7 +63,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         numberOne: numberOne,
         operatorOne: operator,
         numberTwo: numberTwo,
-        result: 00,
+        result: 0,
+        answer: answer,
         score: score,
         levels: Levels.easy));
   }
@@ -73,9 +77,11 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
     var operatorTwo = listOperators[random.nextInt(listOperators.length)];
     int numberThree = random.nextInt(100);
     var score = state.score;
+    int? answer;
 
     if (state.operatorTwo == '+') {
-      var result = state.numberOne * state.numberTwo + state.numberThree!;
+      int result = state.numberOne * state.numberTwo + state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 30;
       } else {
@@ -85,7 +91,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorTwo == '-') {
-      var result = state.numberOne * state.numberTwo + state.numberThree!;
+      int result = state.numberOne * state.numberTwo - state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 30;
       } else {
@@ -102,20 +109,22 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         operatorTwo: operatorTwo,
         numberThree: numberThree,
         result: 0,
+        answer: answer,
         score: score,
         levels: Levels.medium));
   }
 
   void _getNumbersHard(
       GetNumbersHardEvent event, Emitter<CalculationsState> emit) {
-    int numberOne = random.nextInt(100);
+    int numberOne = random.nextInt(100) + 1;
     var operatorOne =
         listOperatorsHard[random.nextInt(listOperatorsHard.length)];
-    int numberTwo = random.nextInt(100);
+    int numberTwo = random.nextInt(100) + 1;
     var operatorTwo =
         listOperatorsHard[random.nextInt(listOperatorsHard.length)];
-    int numberThree = random.nextInt(100);
+    int numberThree = random.nextInt(100) + 1;
     var score = state.score;
+    int? answer;
 
     if (operatorOne == 'x') {
       numberTwo = random.nextInt(10) + 1;
@@ -130,7 +139,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
     }
 
     if (state.operatorOne == '-' && state.operatorTwo == '-') {
-      var result = state.numberOne - state.numberTwo - state.numberThree!;
+      int result = state.numberOne - state.numberTwo - state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -140,7 +150,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == '+' && state.operatorTwo == '-') {
-      var result = state.numberOne + state.numberTwo - state.numberThree!;
+      int result = state.numberOne + state.numberTwo - state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -150,7 +161,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == '+' && state.operatorTwo == '+') {
-      var result = state.numberOne + state.numberTwo + state.numberThree!;
+      int result = state.numberOne + state.numberTwo + state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -160,7 +172,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == '-' && state.operatorTwo == '+') {
-      var result = state.numberOne - state.numberTwo + state.numberThree!;
+      int result = state.numberOne - state.numberTwo + state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -170,7 +183,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == 'x' && state.operatorTwo == '+') {
-      var result = state.numberOne * state.numberTwo + state.numberThree!;
+      int result = state.numberOne * state.numberTwo + state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -180,7 +194,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == '+' && state.operatorTwo == 'x') {
-      var result = state.numberOne + state.numberTwo * state.numberThree!;
+      int result = state.numberOne + state.numberTwo * state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -190,7 +205,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == 'x' && state.operatorTwo == '-') {
-      var result = state.numberOne * state.numberTwo - state.numberThree!;
+      int result = state.numberOne * state.numberTwo - state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -200,7 +216,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == '-' && state.operatorTwo == 'x') {
-      var result = state.numberOne - state.numberTwo * state.numberThree!;
+      int result = state.numberOne - state.numberTwo * state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -210,7 +227,8 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       }
     }
     if (state.operatorOne == 'x' && state.operatorTwo == 'x') {
-      var result = state.numberOne * state.numberTwo * state.numberThree!;
+      int result = state.numberOne * state.numberTwo * state.numberThree!;
+      answer = result;
       if (result == state.result) {
         score = state.score + 60;
       } else {
@@ -226,6 +244,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         numberTwo: numberTwo,
         operatorTwo: operatorTwo,
         numberThree: numberThree,
+        answer: answer,
         result: 0,
         score: score,
         levels: Levels.hard));
@@ -234,7 +253,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
   void _onNumberPressed(NumberPressed event, Emitter<CalculationsState> emit) {
     var number = event.number;
 
-    if (state.result != 0) {
+    if (state.result != 0 && state.result.bitLength < 30) {
       number = int.parse('${state.result}${event.number}');
     }
 
@@ -244,6 +263,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
           operatorOne: state.operatorOne,
           numberTwo: state.numberTwo,
           result: number,
+          answer: state.answer,
           score: state.score,
           levels: state.levels));
     }
@@ -254,6 +274,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         operatorTwo: state.operatorTwo,
         numberThree: state.numberThree,
         result: number,
+        answer: state.answer,
         score: state.score,
         levels: state.levels));
   }
@@ -265,6 +286,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
           operatorOne: state.operatorOne,
           numberTwo: state.numberTwo,
           result: -state.result.abs(),
+          answer: state.answer,
           score: state.score,
           levels: state.levels));
     }
@@ -276,6 +298,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
       operatorTwo: state.operatorTwo,
       numberThree: state.numberThree,
       result: -state.result.abs(),
+      answer: state.answer,
       score: state.score,
       levels: state.levels,
     ));
@@ -289,6 +312,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         operatorTwo: state.operatorTwo,
         numberThree: state.numberThree,
         result: 0,
+        answer: state.answer,
         score: state.score,
         levels: state.levels));
   }
@@ -300,6 +324,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         numberTwo: state.numberTwo,
         operatorTwo: state.operatorTwo,
         numberThree: state.numberThree,
+        answer: state.answer,
         result: 0,
         score: 0,
         levels: state.levels));

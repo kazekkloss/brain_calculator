@@ -25,8 +25,28 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
             padding: EdgeInsets.symmetric(
                 horizontal: width / 10, vertical: height / 60),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                ButtonKeyboardWidget(
+                    navigate: true,
+                    icon: Icon(
+                      Icons.restart_alt,
+                      color: const Color.fromARGB(255, 0, 221, 255),
+                      size: height / 23,
+                    ),
+                    isNumber: false,
+                    onTap: () => Navigator.pushNamed(context, '/counting_down',
+                        arguments: state.levels)),
+                ButtonKeyboardWidget(
+                  navigate: true,
+                  icon: Icon(
+                    Icons.home_filled,
+                    color: const Color.fromARGB(255, 0, 221, 255),
+                    size: height / 23,
+                  ),
+                  isNumber: false,
+                  onTap: () => Navigator.pushNamed(context, '/home'),
+                ),
                 ButtonKeyboardWidget(
                     text: 'C',
                     isNumber: false,
@@ -44,16 +64,13 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
               children: [
                 ButtonKeyboardWidget(
                   text: '7',
-                  isNumber: true,
                   onTap: () => _numberPressed(7),
                 ),
                 ButtonKeyboardWidget(
                   text: '8',
-                  isNumber: true,
                   onTap: () => _numberPressed(8),
                 ),
-                ButtonKeyboardWidget(
-                    text: '9', isNumber: true, onTap: () => _numberPressed(9))
+                ButtonKeyboardWidget(text: '9', onTap: () => _numberPressed(9))
               ],
             ),
           ),
@@ -65,17 +82,14 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
               children: [
                 ButtonKeyboardWidget(
                   text: '4',
-                  isNumber: true,
                   onTap: () => _numberPressed(4),
                 ),
                 ButtonKeyboardWidget(
                   text: '5',
-                  isNumber: true,
                   onTap: () => _numberPressed(5),
                 ),
                 ButtonKeyboardWidget(
                   text: '6',
-                  isNumber: true,
                   onTap: () => _numberPressed(6),
                 )
               ],
@@ -89,17 +103,14 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
               children: [
                 ButtonKeyboardWidget(
                   text: '1',
-                  isNumber: true,
                   onTap: () => _numberPressed(1),
                 ),
                 ButtonKeyboardWidget(
                   text: '2',
-                  isNumber: true,
                   onTap: () => _numberPressed(2),
                 ),
                 ButtonKeyboardWidget(
                   text: '3',
-                  isNumber: true,
                   onTap: () => _numberPressed(3),
                 ),
               ],
@@ -119,7 +130,6 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
                 ),
                 ButtonKeyboardWidget(
                   text: '0',
-                  isNumber: true,
                   onTap: () => _numberPressed(0),
                 ),
                 ButtonKeyboardWidget(
@@ -127,7 +137,6 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
                     isNumber: false,
                     onTap: () {
                       {
-                        print(state.levels);
                         state.levels == Levels.hard
                             ? context
                                 .read<CalculationsBloc>()

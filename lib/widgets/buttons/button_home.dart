@@ -27,7 +27,7 @@ class ButtonHome extends StatelessWidget {
                 text,
                 style: Theme.of(context)
                     .textTheme
-                    .headline2!
+                    .headline3!
                     .copyWith(fontSize: height / 40),
               ),
             ),

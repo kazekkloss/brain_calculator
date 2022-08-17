@@ -9,6 +9,7 @@ part 'score_state.dart';
 class ScoreBloc extends HydratedBloc<ScoreEvent, ScoreState> {
   ScoreBloc() : super(const ScoreState()) {
     on<AddScore>(_onAdd);
+    on<RemoveScore>(_remove);
   }
 
   void _onAdd(AddScore event, Emitter emit) {
@@ -23,6 +24,12 @@ class ScoreBloc extends HydratedBloc<ScoreEvent, ScoreState> {
       state.scoreList.sort((a, b) => b.points.compareTo(a.points));
       emit(ScoreState(scoreList: state.scoreList));
     }
+  }
+
+  //to remove
+  void _remove(RemoveScore event, Emitter emit) {
+    final state = this.state;
+    emit(ScoreState(scoreList: state.scoreList..remove(event.score)));
   }
 
   @override

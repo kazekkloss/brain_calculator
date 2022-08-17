@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    //var width = MediaQuery.of(context).size.width;
     Timer(
         const Duration(seconds: 3),
         (() => Navigator.of(context).pushNamedAndRemoveUntil(
@@ -26,26 +26,25 @@ class SplashScreen extends StatelessWidget {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          body: CustomTheme().gradientContainer(
-            Center(
+          body: GradientContainer(
+            child: Center(
               child: Column(
                 children: [
                   Padding(
                     padding:
                         EdgeInsets.only(top: height / 5, bottom: height / 15),
                     child: Text(
-                      'Brain Calculator',
-                      style: TextStyle(
-                          fontSize: width / 10,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w300,
-                          color: Color.fromARGB(255, 255, 255, 255)),
+                      'Brain\nCalculator',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(fontSize: height / 14),
                       textAlign: TextAlign.center,
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 2.4,
-                    width: MediaQuery.of(context).size.height / 2.4,
+                    height: height / 2.4,
+                    width: height / 2.4,
                     child: const RiveAnimation.asset(
                       Assets.jumpCalc,
                       fit: BoxFit.cover,

@@ -3,6 +3,7 @@ import 'package:quiver/async.dart';
 
 import '../../blocs/blocs_export.dart';
 
+import '../../config/config.dart';
 import '../../widgets/widgets.dart';
 
 class CountScreen extends StatefulWidget {
@@ -56,25 +57,27 @@ class _CountScreenState extends State<CountScreen> {
         var height = MediaQuery.of(context).size.height;
         return WillPopScope(
           child: Scaffold(
-            backgroundColor: const Color.fromARGB(255, 0, 110, 200),
-            body: Column(
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: height / 18, bottom: height / 60),
-                  child: DisplayCalculationWidget(
-                    numberOne: state.numberOne,
-                    operatorOne: state.operatorOne,
-                    numberTwo: state.numberTwo,
-                    operatorTwo: state.operatorTwo,
-                    numberThree: state.numberThree,
-                    result: state.result,
-                    score: state.score,
-                    timer: _current,
+            body: GradientContainer(
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: height / 18, bottom: height / 60),
+                    child: DisplayCalculationWidget(
+                      numberOne: state.numberOne,
+                      operatorOne: state.operatorOne,
+                      numberTwo: state.numberTwo,
+                      operatorTwo: state.operatorTwo,
+                      numberThree: state.numberThree,
+                      result: state.result,
+                      answer: state.answer,
+                      score: state.score,
+                      timer: _current,
+                    ),
                   ),
-                ),
-                const KeyboardWidget(),
-              ],
+                  const KeyboardWidget(),
+                ],
+              ),
             ),
           ),
           onWillPop: () async {
