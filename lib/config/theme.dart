@@ -4,67 +4,67 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData theme() {
   return ThemeData(
     textTheme: TextTheme(
-        headline1: GoogleFonts.chakraPetch(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            shadows: [
-              Shadow(
-                offset: Offset(0, 0),
-                blurRadius: 60,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ],
-          ),
+      headline1: GoogleFonts.chakraPetch(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
+          shadows: [
+            Shadow(
+              offset: Offset(0, 0),
+              blurRadius: 60,
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ],
         ),
-        headline2: GoogleFonts.robotoMono(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            fontWeight: FontWeight.w300,
-            shadows: [
-              Shadow(
-                offset: Offset(0, 0),
-                blurRadius: 60,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ],
-          ),
+      ),
+      headline2: GoogleFonts.robotoMono(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
+          fontWeight: FontWeight.w300,
+          shadows: [
+            Shadow(
+              offset: Offset(0, 0),
+              blurRadius: 60,
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ],
         ),
-        headline3: GoogleFonts.robotoMono(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            fontWeight: FontWeight.w400,
-          ),
+      ),
+      headline3: GoogleFonts.robotoMono(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
+          fontWeight: FontWeight.w400,
         ),
-        headline4: GoogleFonts.robotoMono(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-            fontWeight: FontWeight.w400,
-          ),
+      ),
+      headline4: GoogleFonts.robotoMono(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
+          fontWeight: FontWeight.w400,
         ),
-        subtitle1: GoogleFonts.robotoMono(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-            fontWeight: FontWeight.w400,
-          ),
+      ),
+      subtitle1: GoogleFonts.robotoMono(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
+          fontWeight: FontWeight.w400,
         ),
-        subtitle2: GoogleFonts.openSans(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-            fontWeight: FontWeight.w400,
-          ),
+      ),
+      subtitle2: GoogleFonts.openSans(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
+          fontWeight: FontWeight.w400,
         ),
-        bodyText1: GoogleFonts.openSans(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 0, 80, 92),
-            fontWeight: FontWeight.w600,
-          ),
+      ),
+      bodyText1: GoogleFonts.openSans(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 0, 80, 92),
+          fontWeight: FontWeight.w600,
         ),
-        bodyText2: GoogleFonts.chakraPetch(
-          textStyle: const TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-          ),
+      ),
+      bodyText2: GoogleFonts.chakraPetch(
+        textStyle: const TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
         ),
-        ),
+      ),
+    ),
   );
 }
 
@@ -91,9 +91,10 @@ class GradientContainer extends StatelessWidget {
 }
 
 class Assets {
-  static const badCalc = 'assets/animations/kalkulator-bad.riv';
-  static const jumpCalc = 'assets/animations/splash_screen_animation.riv';
-  static const homeCalc = 'assets/animations/kalkulator_home.riv';
-  static const flagCalc = 'assets/animations/kalkulator_flag.riv';
-  static const victoryCalc = 'assets/animations/kalkulator_victory.riv';
+  static const badCalc = 'assets/animations/calculator_bad.riv';
+  static const jumpCalc = 'assets/animations/calculator_splash.riv';
+  static const homeCalc = 'assets/animations/calculator_home.riv';
+  static const flagCalc = 'assets/animations/calculator_flag.riv';
+  static const victoryCalc = 'assets/animations/calculator_victory.riv';
+  static const okCalc = 'assets/animations/calculator_ok.riv';
 }

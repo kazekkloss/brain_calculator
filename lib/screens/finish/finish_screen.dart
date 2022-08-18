@@ -5,7 +5,6 @@ import 'package:calculator/blocs/blocs_export.dart';
 import 'package:calculator/model/score_model.dart';
 import 'package:calculator/config/config.dart';
 
-
 class FinishScreen extends StatefulWidget {
   const FinishScreen({
     Key? key,
@@ -81,25 +80,35 @@ class _FinishScreenState extends State<FinishScreen> {
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
-                    state.score == 0
+                    state.score >= 200
                         ? SizedBox(
                             height: height / 3.4,
                             width: height / 2,
                             child: const RiveAnimation.asset(
-                              Assets.badCalc,
+                              Assets.victoryCalc,
                               fit: BoxFit.contain,
                               alignment: Alignment(0, 1),
                             ),
                           )
-                        : SizedBox(
-                            height: height / 3.4,
-                            width: height / 2,
-                            child: const RiveAnimation.asset(
-                              Assets.victoryCalc,
-                              fit: BoxFit.fitHeight,
-                              alignment: Alignment(0.3, 1),
-                            ),
-                          ),
+                        : state.score == 0
+                            ? SizedBox(
+                                height: height / 3.4,
+                                width: height / 2,
+                                child: const RiveAnimation.asset(
+                                  Assets.badCalc,
+                                  fit: BoxFit.contain,
+                                  alignment: Alignment(0, 1),
+                                ),
+                              )
+                            : SizedBox(
+                                height: height / 3.4,
+                                width: height / 2,
+                                child: const RiveAnimation.asset(
+                                  Assets.okCalc,
+                                  fit: BoxFit.fitHeight,
+                                  alignment: Alignment(0.3, 1),
+                                ),
+                              ),
                     Text(
                       'On $level level',
                       style: Theme.of(context)

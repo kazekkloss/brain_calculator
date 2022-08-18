@@ -9,14 +9,14 @@ class CalculationsState extends Equatable {
   final String? operatorTwo;
   final int? numberThree;
   final int result;
-  final int? answer;
+  final int answer;
   final int score;
   final Enum levels;
   const CalculationsState(
       {required this.numberOne,
       required this.operatorOne,
       required this.numberTwo,
-      this.answer,
+      required this.answer,
       this.operatorTwo,
       this.numberThree,
       required this.result,
@@ -24,5 +24,6 @@ class CalculationsState extends Equatable {
       required this.levels});
 
   @override
-  List<Object> get props => [numberOne, operatorOne, numberTwo, result, score];
+  List<Object> get props =>
+      [numberOne, operatorOne, answer, numberTwo, result, score];
 }

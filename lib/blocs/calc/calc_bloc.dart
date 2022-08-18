@@ -9,10 +9,11 @@ part 'calc_state.dart';
 class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
   CalculationsBloc()
       : super(const CalculationsState(
-            numberOne: 00,
+            numberOne: 0,
             operatorOne: '',
-            numberTwo: 00,
-            result: 00,
+            numberTwo: 0,
+            result: 0,
+            answer: 0,
             score: 0,
             levels: Levels.easy)) {
     on<GetNumbersEasyEvent>(_getNumbersEasy);
@@ -34,7 +35,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
     int numberTwo = random.nextInt(min(numberOne, 100) + 1);
     var operator = listOperators[random.nextInt(listOperators.length)];
     int score = state.score;
-    int? answer;
+    int? answer = state.answer;
 
     if (state.operatorOne == '+') {
       int result = state.numberOne + state.numberTwo;
@@ -77,7 +78,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
     var operatorTwo = listOperators[random.nextInt(listOperators.length)];
     int numberThree = random.nextInt(100);
     var score = state.score;
-    int? answer;
+    int? answer = state.answer;
 
     if (state.operatorTwo == '+') {
       int result = state.numberOne * state.numberTwo + state.numberThree!;
@@ -124,7 +125,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         listOperatorsHard[random.nextInt(listOperatorsHard.length)];
     int numberThree = random.nextInt(100) + 1;
     var score = state.score;
-    int? answer;
+    int? answer = state.answer;
 
     if (operatorOne == 'x') {
       numberTwo = random.nextInt(10) + 1;
@@ -324,7 +325,7 @@ class CalculationsBloc extends Bloc<CalculationsEvent, CalculationsState> {
         numberTwo: state.numberTwo,
         operatorTwo: state.operatorTwo,
         numberThree: state.numberThree,
-        answer: state.answer,
+        answer: 0,
         result: 0,
         score: 0,
         levels: state.levels));

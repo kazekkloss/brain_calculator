@@ -98,4 +98,3 @@ class _CountingDownScreenState extends State<CountingDownScreen> {
     );
   }
 }
-

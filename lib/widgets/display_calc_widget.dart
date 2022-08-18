@@ -140,7 +140,7 @@ class DisplayCalculationWidget extends StatelessWidget {
                   SizedBox(
                     width: height/18,
                     child: Center(
-                        child: answer != null
+                        child: answer != 0
                             ? Text(answer.toString(),
                                 style: Theme.of(context)
                                     .textTheme
