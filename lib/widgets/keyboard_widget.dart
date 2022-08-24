@@ -1,3 +1,4 @@
+import 'package:calculator/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 import 'package:calculator/blocs/blocs_export.dart';
@@ -35,18 +36,30 @@ class _KeyboardWidgetState extends State<KeyboardWidget> {
                       size: height / 23,
                     ),
                     isNumber: false,
-                    onTap: () => Navigator.pushNamed(context, '/counting_down',
-                        arguments: state.levels)),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  CountingDownScreen(
+                                    levels: state.levels,
+                                  )));
+                    }),
                 ButtonKeyboardWidget(
-                  navigate: true,
-                  icon: Icon(
-                    Icons.home_filled,
-                    color: const Color.fromARGB(255, 0, 221, 255),
-                    size: height / 23,
-                  ),
-                  isNumber: false,
-                  onTap: () => Navigator.pushNamed(context, '/home'),
-                ),
+                    navigate: true,
+                    icon: Icon(
+                      Icons.home_filled,
+                      color: const Color.fromARGB(255, 0, 221, 255),
+                      size: height / 23,
+                    ),
+                    isNumber: false,
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const HomeScreen()));
+                    }),
                 ButtonKeyboardWidget(
                     text: 'C',
                     isNumber: false,

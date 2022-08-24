@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
+import 'package:quiver/iterables.dart';
 
 import '../../blocs/blocs_export.dart';
 
@@ -22,32 +25,36 @@ class CountScreen extends StatefulWidget {
 }
 
 class _CountScreenState extends State<CountScreen> {
-  final int _start = 60;
-  int _current = 60;
+  Timer? _countDownTimer;
+  Duration _duration = const Duration(seconds: 60);
 
-  void startTimer() {
-    CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: _start),
-      const Duration(seconds: 1),
-    );
-
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      setState(() {
-        _current = _start - duration.elapsed.inSeconds;
-      });
-    });
-
-    sub.onDone(() {
-      Navigator.pushNamed(context, '/finish');
+  void _setCountDown() {
+    const reduce = 1;
+    setState(() {
+      final _seconds = _duration.inSeconds - reduce;
+      if (_seconds < 0) {
+        _countDownTimer!.cancel();
+        Navigator.pushNamed(context, '/finish');
+      } else {
+        _duration = Duration(seconds: _seconds);
+      }
     });
   }
 
   @override
   void initState() {
     context.read<CalculationsBloc>().add(ClearScoreEvent());
-    startTimer();
+    _countDownTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => _setCountDown());
+    print('init');
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    print('dispose');
+    _countDownTimer!.cancel();
+    super.dispose();
   }
 
   @override
@@ -55,6 +62,7 @@ class _CountScreenState extends State<CountScreen> {
     return BlocBuilder<CalculationsBloc, CalculationsState>(
       builder: (context, state) {
         var height = MediaQuery.of(context).size.height;
+        final seconds = _duration.inSeconds.toInt();
         return WillPopScope(
           child: Scaffold(
             body: GradientContainer(
@@ -72,7 +80,7 @@ class _CountScreenState extends State<CountScreen> {
                       result: state.result,
                       answer: state.answer,
                       score: state.score,
-                      timer: _current,
+                      timer: seconds,
                     ),
                   ),
                   const KeyboardWidget(),

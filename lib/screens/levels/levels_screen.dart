@@ -50,7 +50,7 @@ class LevelsScreen extends StatelessWidget {
                       width: width,
                       title: 'Easy',
                       math: '43 - 23',
-                      description: 'Level for humanists',
+                      description: 'To warm up',
                     ),
                   ),
                   GestureDetector(
@@ -63,7 +63,7 @@ class LevelsScreen extends StatelessWidget {
                       width: width,
                       title: 'Medium',
                       math: '4 x 14 + 54',
-                      description: 'Level for smart people',
+                      description: 'To think hard',
                     ),
                   ),
                   GestureDetector(
@@ -76,7 +76,7 @@ class LevelsScreen extends StatelessWidget {
                       width: width,
                       title: 'Hard',
                       math: '15 - 13 x 54',
-                      description: 'Level for masochists',
+                      description: 'To have a headache',
                     ),
                   ),
                 ],

@@ -45,6 +45,7 @@ dependencies:
   quiver: ^3.1.0
   intl: ^0.17.0
   google_fonts: ^3.0.1
+  rename: ^2.0.1
 
 dev_dependencies:
   flutter_test:

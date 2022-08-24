@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:quiver/async.dart';
 
 import 'package:calculator/blocs/blocs_export.dart';
 
@@ -25,42 +26,38 @@ class CountingDownScreen extends StatefulWidget {
 }
 
 class _CountingDownScreenState extends State<CountingDownScreen> {
-  final int _start = 3;
-  int _current = 3;
+  Timer? _countDownTimer;
+  Duration _duration = const Duration(seconds: 5);
 
-  void startTimer() {
-    CountdownTimer countDownTimer = CountdownTimer(
-      Duration(seconds: _start),
-      const Duration(seconds: 1),
-    );
-
-    var sub = countDownTimer.listen(null);
-    sub.onData((duration) {
-      setState(() {
-        _current = _start - duration.elapsed.inSeconds;
-      });
-    });
-
-    sub.onDone(() {
-      if (widget.levels == Levels.easy) {
-        context.read<CalculationsBloc>().add(GetNumbersEasyEvent());
-        Navigator.pushNamed(context, '/count');
+  void _setCountDown() {
+    const reduce = 1;
+    setState(() {
+      final _seconds = _duration.inSeconds - reduce;
+      if (_seconds < 0) {
+        _countDownTimer!.cancel();
+        if (widget.levels == Levels.easy) {
+          context.read<CalculationsBloc>().add(GetNumbersEasyEvent());
+          Navigator.pushNamed(context, '/count');
+        }
+        if (widget.levels == Levels.medium) {
+          context.read<CalculationsBloc>().add(GetNumbersMediumEvent());
+          Navigator.pushNamed(context, '/count');
+        }
+        if (widget.levels == Levels.hard) {
+          context.read<CalculationsBloc>().add(GetNumbersHardEvent());
+          Navigator.pushNamed(context, '/count');
+        }
+      } else {
+        _duration = Duration(seconds: _seconds);
       }
-      if (widget.levels == Levels.medium) {
-        context.read<CalculationsBloc>().add(GetNumbersMediumEvent());
-        Navigator.pushNamed(context, '/count');
-      }
-      if (widget.levels == Levels.hard) {
-        context.read<CalculationsBloc>().add(GetNumbersHardEvent());
-        Navigator.pushNamed(context, '/count');
-      }
-      sub.cancel();
     });
   }
 
   @override
   void initState() {
-    startTimer();
+    context.read<CalculationsBloc>().add(ClearScoreEvent());
+    _countDownTimer =
+        Timer.periodic(const Duration(seconds: 1), (_) => _setCountDown());
     super.initState();
   }
 
@@ -68,6 +65,7 @@ class _CountingDownScreenState extends State<CountingDownScreen> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final seconds = _duration.inSeconds.toInt();
     return WillPopScope(
       child: Scaffold(
         body: GradientContainer(
@@ -77,7 +75,7 @@ class _CountingDownScreenState extends State<CountingDownScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TickerWidget(height: height, current: _current),
+                  TickerWidget(height: height, current: seconds),
                   SizedBox(
                     height: height / 2.4,
                     width: width,
